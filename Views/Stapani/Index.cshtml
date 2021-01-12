@@ -1,0 +1,88 @@
+﻿@model Proiect_Master_Andrei_Preotu.Models.DogShowViewmodels.StapanIndexData
+
+@{
+    ViewData["Title"] = "Stapani";
+}
+
+<h1>Stapani</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nume</th>
+            <th>Prenume</th>
+            <th>Varsta</th>
+            <th>NrTelefon</th>
+            <th>Nume Catei</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Stapani)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["CatelID"])
+            {
+                selectedRow = "success";
+            }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Nume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Varsta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrTelefon)
+            </td>
+            <td>
+                @{ foreach (var catel in item.Catei)
+                    {
+                        @catel.Nume <br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.ID">Catei</a> |
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Catei != null)
+{
+    <h3>Catei detinuti</h3>
+    <table class="table">
+        <tr>
+            <th>Nume</th>
+            <th>Rasa</th>
+        </tr>
+        @foreach (var item in Model.Catei)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["CatelID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @item.Nume
+                </td>
+                <td>
+                    @item.Rasa
+                </td>
+            </tr>
+        }
+    </table>
+}
